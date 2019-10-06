@@ -1,12 +1,12 @@
 package start;
 
 import components.ServerCard;
-import io.CSVFile;
-import listeners.JButtonActionListeners;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalScrollBarUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -75,7 +75,12 @@ public class StartUp {
             }
         });
 
-        startAsClient.addActionListener(JButtonActionListeners.getClientStartActionListener());
+        startAsClient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startAsClient();
+            }
+        });
 
         panel.add(startAsClient);
         panel.add(Box.createRigidArea(new Dimension(0,75)));
@@ -100,7 +105,12 @@ public class StartUp {
             }
         });
 
-        startAsServer.addActionListener(JButtonActionListeners.getServerStartActionListener());
+        startAsServer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("It worked");
+            }
+        });
 
         panel.add(startAsServer);
 
