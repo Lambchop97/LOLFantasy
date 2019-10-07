@@ -3,7 +3,9 @@ package start;
 import components.ServerCard;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLabelUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
+import javax.swing.plaf.metal.MetalTextFieldUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,11 @@ public class StartUp {
     private static JButton startAsClient;
 
     private static JPanel currentPanel;
+
+    public static Color greyLight = new Color(150,150,150);
+    public static Color grey = new Color(65,65,65);
+    public static Color greyDark = new Color(48,48,48);
+    public static Color brickRed = new Color(178,34,34);
 
     public static void main(String[] args) {
 
@@ -45,10 +52,7 @@ public class StartUp {
     }
 
     private static void setViewAsStartButtons(){
-
-        if(currentPanel != null){
-            resetFrame();
-        }
+        if(currentPanel != null) resetFrame();
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -58,7 +62,7 @@ public class StartUp {
         startAsClient = new JButton("Client");
         startAsClient.setMaximumSize(new Dimension(200, 50));
         startAsClient.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startAsClient.setIcon(new ImageIcon(createImage(200, 50, new Color(65,65,65))));
+        startAsClient.setIcon(new ImageIcon(createImage(200, 50, grey)));
         startAsClient.setForeground(Color.white);
         startAsClient.setHorizontalTextPosition(SwingConstants.CENTER);
         startAsClient.setVerticalTextPosition(SwingConstants.CENTER);
@@ -66,12 +70,12 @@ public class StartUp {
         startAsClient.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                startAsClient.setIcon(new ImageIcon(createImage(200, 50, new Color(48,48,48))));
+                startAsClient.setIcon(new ImageIcon(createImage(200, 50, greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                startAsClient.setIcon(new ImageIcon(createImage(200, 50, new Color(65,65,65))));
+                startAsClient.setIcon(new ImageIcon(createImage(200, 50, grey)));
             }
         });
 
@@ -88,7 +92,7 @@ public class StartUp {
         startAsServer = new JButton("Server");
         startAsServer.setMaximumSize(new Dimension(200, 50));
         startAsServer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startAsServer.setIcon(new ImageIcon(createImage(200, 50, new Color(65,65,65))));
+        startAsServer.setIcon(new ImageIcon(createImage(200, 50, grey)));
         startAsServer.setForeground(Color.white);
         startAsServer.setHorizontalTextPosition(SwingConstants.CENTER);
         startAsServer.setVerticalTextPosition(SwingConstants.CENTER);
@@ -96,12 +100,12 @@ public class StartUp {
         startAsServer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                startAsServer.setIcon(new ImageIcon(createImage(200, 50, new Color(48,48,48))));
+                startAsServer.setIcon(new ImageIcon(createImage(200, 50, greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                startAsServer.setIcon(new ImageIcon(createImage(200, 50, new Color(65,65,65))));
+                startAsServer.setIcon(new ImageIcon(createImage(200, 50, grey)));
             }
         });
 
@@ -115,16 +119,15 @@ public class StartUp {
         panel.add(startAsServer);
 
         currentPanel = panel;
-        panel.setBackground(new Color(150,150,150));
+        panel.setBackground(greyLight);
         frame.add(panel);
         frame.revalidate();
         frame.repaint();
     }
 
     private static void setViewAsSelectServer(){
-        if(currentPanel != null){
-            resetFrame();
-        }
+        if(currentPanel != null) resetFrame();
+
 
         JPanel panel = new JPanel();
 
@@ -156,13 +159,13 @@ public class StartUp {
             @Override
             protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                ((Graphics2D) g).drawImage(createImage(32, 32, new Color(48,48,48)), r.x , r.y, r.width, r.height, null);
+                ((Graphics2D) g).drawImage(createImage(32, 32, greyDark), r.x , r.y, r.width, r.height, null);
             }
 
             @Override
             protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                ((Graphics2D) g).drawImage(createImage(32, 32, new Color(150,150,150)), r.x , r.y, r.width, r.height, null);
+                ((Graphics2D) g).drawImage(createImage(32, 32, greyLight), r.x , r.y, r.width, r.height, null);
             }
 
             @Override
@@ -203,7 +206,66 @@ public class StartUp {
         panel.add(Box.createRigidArea(new Dimension(0,9)));
 
 
-        panel.setBackground(new Color(65,65,65));
+        panel.setBackground(grey);
+
+        currentPanel = panel;
+
+        frame.add(panel);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    public static void setViewAsAddServer(){
+        if(currentPanel != null) resetFrame();
+
+        JPanel panel = new JPanel();
+
+        currentPanel = panel;
+
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+
+        JPanel labels = new JPanel();
+        JPanel textFields = new JPanel();
+
+        labels.setLayout(new BoxLayout(labels, BoxLayout.PAGE_AXIS));
+        textFields.setLayout(new BoxLayout(textFields, BoxLayout.PAGE_AXIS));
+
+        JLabel name = new JLabel("Name:");
+        JTextField nameField = new JTextField();
+        JLabel ip = new JLabel("IP:");
+        JTextField ipField = new JTextField();
+
+        name.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        name.setForeground(Color.white);
+        ip.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        ip.setForeground(Color.white);
+
+        labels.add(name);
+        labels.add(Box.createRigidArea(new Dimension(0,15)));
+        labels.add(ip);
+
+        labels.setBorder(BorderFactory.createMatteBorder(0,5,0,6,grey));
+        textFields.setBorder(BorderFactory.createMatteBorder(0,0,0,5,grey));
+        panel.setBackground(grey);
+        labels.setBackground(grey);
+        textFields.setBackground(grey);
+
+
+        nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
+        nameField.setBackground(greyLight);
+        nameField.setForeground(Color.white);
+        nameField.setBorder(BorderFactory.createMatteBorder(3,2,1,2,greyLight));
+        ipField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 24));
+        ipField.setBackground(greyLight);
+        ipField.setForeground(Color.white);
+        ipField.setBorder(BorderFactory.createMatteBorder(3,2,1,2,greyLight));
+
+        textFields.add(nameField);
+        textFields.add(Box.createRigidArea(new Dimension(0, 10)));
+        textFields.add(ipField);
+
+        panel.add(labels);
+        panel.add(textFields);
 
         frame.add(panel);
         frame.revalidate();
@@ -225,7 +287,7 @@ public class StartUp {
         new File(System.getProperty("user.home") + "/LOLFantasy").mkdir();
     }
 
-    static private Image createImage(int w, int h, Color c) {
+    static public Image createImage(int w, int h, Color c) {
         BufferedImage bi = new BufferedImage(
                 w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bi.createGraphics();
