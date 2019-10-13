@@ -17,7 +17,7 @@ public class ServerCard extends JPanel {
 
     private JLabel image;
 
-    private static BufferedImage defaultIcon;
+    public static BufferedImage defaultIcon;
 
     static {
         try {
@@ -113,6 +113,8 @@ public class ServerCard extends JPanel {
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     System.out.println("delete");
+                    delete();
+                    StartUp.setViewAsSelectServer();
                 }
             });
 
@@ -153,6 +155,20 @@ public class ServerCard extends JPanel {
             this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
             this.setBackground(new Color(48, 48, 48));
         }
+    }
+
+    public void delete(){
+        File file = new File(StartUp.HOME_PATH + "/" + name);
+
+        deleteFile(file);
+    }
+
+    private static boolean deleteFile(File file){
+        File[] files = file.listFiles();
+        if(files != null) for(File f: files){
+            deleteFile(f);
+        }
+        return file.delete();
     }
 
 }

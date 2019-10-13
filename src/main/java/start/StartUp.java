@@ -51,7 +51,7 @@ public class StartUp {
         createDir();
     }
 
-    private static void setViewAsStartButtons(){
+    public static void setViewAsStartButtons(){
         if(currentPanel != null) resetFrame();
 
         JPanel panel = new JPanel();
@@ -59,10 +59,10 @@ public class StartUp {
 
         panel.add(Box.createRigidArea(new Dimension(0,125)));
 
-        startAsClient = new JButton("Client");
+        startAsClient = new JButton("CLIENT");
         startAsClient.setMaximumSize(new Dimension(200, 50));
         startAsClient.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startAsClient.setIcon(new ImageIcon(createImage(200, 50, grey)));
+        startAsClient.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
         startAsClient.setForeground(Color.white);
         startAsClient.setHorizontalTextPosition(SwingConstants.CENTER);
         startAsClient.setVerticalTextPosition(SwingConstants.CENTER);
@@ -75,7 +75,7 @@ public class StartUp {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                startAsClient.setIcon(new ImageIcon(createImage(200, 50, grey)));
+                startAsClient.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
             }
         });
 
@@ -89,10 +89,10 @@ public class StartUp {
         panel.add(startAsClient);
         panel.add(Box.createRigidArea(new Dimension(0,75)));
 
-        startAsServer = new JButton("Server");
+        startAsServer = new JButton("SERVER");
         startAsServer.setMaximumSize(new Dimension(200, 50));
         startAsServer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startAsServer.setIcon(new ImageIcon(createImage(200, 50, grey)));
+        startAsServer.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
         startAsServer.setForeground(Color.white);
         startAsServer.setHorizontalTextPosition(SwingConstants.CENTER);
         startAsServer.setVerticalTextPosition(SwingConstants.CENTER);
@@ -105,27 +105,27 @@ public class StartUp {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                startAsServer.setIcon(new ImageIcon(createImage(200, 50, grey)));
+                startAsServer.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
             }
         });
 
         startAsServer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("It worked");
+                setViewAsAddServer();
             }
         });
 
         panel.add(startAsServer);
 
         currentPanel = panel;
-        panel.setBackground(greyLight);
+        panel.setBackground(grey);
         frame.add(panel);
         frame.revalidate();
         frame.repaint();
     }
 
-    private static void setViewAsSelectServer(){
+    public static void setViewAsSelectServer(){
         if(currentPanel != null) resetFrame();
 
 
@@ -137,7 +137,7 @@ public class StartUp {
 
         JPanel scrollingContent = new JPanel();
 
-        JLabel screenTitle = new JLabel("Select Server");
+        JLabel screenTitle = new JLabel("SELECT SERVER");
         screenTitle.setForeground(Color.white);
         screenTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
@@ -159,7 +159,7 @@ public class StartUp {
             @Override
             protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                ((Graphics2D) g).drawImage(createImage(32, 32, greyDark), r.x , r.y, r.width, r.height, null);
+                ((Graphics2D) g).drawImage(createImage(32, 32, greyLight.darker()), r.x , r.y, r.width, r.height, null);
             }
 
             @Override
@@ -222,50 +222,209 @@ public class StartUp {
 
         currentPanel = panel;
 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setBorder(BorderFactory.createMatteBorder(0,0,10,0, grey));
 
-        JPanel labels = new JPanel();
-        JPanel textFields = new JPanel();
+        JPanel nameComps = new JPanel();
+        JPanel ipComps = new JPanel();
+        JPanel descComps = new JPanel();
 
-        labels.setLayout(new BoxLayout(labels, BoxLayout.PAGE_AXIS));
-        textFields.setLayout(new BoxLayout(textFields, BoxLayout.PAGE_AXIS));
+        nameComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,grey));
+        ipComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,grey));
+        descComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,grey));
 
-        JLabel name = new JLabel("Name:");
-        JTextField nameField = new JTextField();
+        panel.setBackground(grey);
+        nameComps.setBackground(grey);
+        ipComps.setBackground(grey);
+        descComps.setBackground(grey);
+
+        nameComps.setLayout(new BoxLayout(nameComps, BoxLayout.LINE_AXIS));
+        ipComps.setLayout(new BoxLayout(ipComps, BoxLayout.LINE_AXIS));
+        descComps.setLayout(new BoxLayout(descComps, BoxLayout.LINE_AXIS));
+
+        nameComps.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ipComps.setAlignmentX(Component.CENTER_ALIGNMENT);
+        descComps.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel name = new JLabel("NAME:");
         JLabel ip = new JLabel("IP:");
+        JLabel desc = new JLabel("DESCRIPTION:");
+        JTextField nameField = new JTextField();
         JTextField ipField = new JTextField();
+        JTextField descField = new JTextField();
+
 
         name.setAlignmentX(Component.RIGHT_ALIGNMENT);
         name.setForeground(Color.white);
-        ip.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        ip.setForeground(Color.white);
-
-        labels.add(name);
-        labels.add(Box.createRigidArea(new Dimension(0,15)));
-        labels.add(ip);
-
-        labels.setBorder(BorderFactory.createMatteBorder(0,5,0,6,grey));
-        textFields.setBorder(BorderFactory.createMatteBorder(0,0,0,5,grey));
-        panel.setBackground(grey);
-        labels.setBackground(grey);
-        textFields.setBackground(grey);
-
+        name.setBorder(BorderFactory.createMatteBorder(0,0,0,5, grey));
 
         nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
         nameField.setBackground(greyLight);
         nameField.setForeground(Color.white);
-        nameField.setBorder(BorderFactory.createMatteBorder(3,2,1,2,greyLight));
-        ipField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 24));
+        nameField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,greyLight));
+        Font f = nameField.getFont();
+        nameField.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+
+        nameComps.add(name);
+        nameComps.add(nameField);
+
+        ip.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        ip.setForeground(Color.white);
+        ip.setBorder(BorderFactory.createMatteBorder(0,0,0,5,grey));
+
+        ipField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
         ipField.setBackground(greyLight);
         ipField.setForeground(Color.white);
-        ipField.setBorder(BorderFactory.createMatteBorder(3,2,1,2,greyLight));
+        ipField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,greyLight));
+        f = ipField.getFont();
+        ipField.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
 
-        textFields.add(nameField);
-        textFields.add(Box.createRigidArea(new Dimension(0, 10)));
-        textFields.add(ipField);
+        ipComps.add(ip);
+        ipComps.add(ipField);
 
-        panel.add(labels);
-        panel.add(textFields);
+        desc.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        desc.setForeground(Color.white);
+        desc.setBorder(BorderFactory.createMatteBorder(0,0,0,5, grey));
+
+        descField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
+        descField.setBackground(greyLight);
+        descField.setForeground(Color.white);
+        descField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,greyLight));
+        f = descField.getFont();
+        descField.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+
+        descComps.add(desc);
+        descComps.add(descField);
+
+        JLabel title = new JLabel("ADD SERVER");
+        title.setForeground(Color.white);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panel.add(Box.createRigidArea(new Dimension(0,10)));
+        panel.add(title);
+        panel.add(Box.createRigidArea(new Dimension(0,105)));
+        panel.add(nameComps);
+        panel.add(Box.createRigidArea(new Dimension(0,10)));
+        panel.add(ipComps);
+        panel.add(Box.createRigidArea(new Dimension(0,10)));
+        panel.add(descComps);
+
+        JPanel bottomPanel = new JPanel();
+
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
+        bottomPanel.setBackground(grey);
+
+        JPanel iconComps = new JPanel();
+
+        iconComps.setLayout(new BoxLayout(iconComps, BoxLayout.PAGE_AXIS));
+
+        JPanel iconCompsInner = new JPanel();
+
+        iconCompsInner.setLayout(new BoxLayout(iconCompsInner, BoxLayout.LINE_AXIS));
+
+        JLabel icon = new JLabel(new ImageIcon(ServerCard.defaultIcon));
+        JLabel iconInner = new JLabel("ICON:");
+        JButton changeIcon = new JButton("CHANGE");
+
+        iconComps.setBackground(grey);
+        iconCompsInner.setBackground(grey);
+        iconInner.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        iconInner.setForeground(Color.white);
+        changeIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        icon.setBorder(BorderFactory.createMatteBorder(0,10,0,0, grey));
+
+        iconComps.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        iconCompsInner.add(iconInner);
+        iconCompsInner.add(icon);
+        iconComps.add(iconCompsInner);
+        iconComps.add(changeIcon);
+
+        iconCompsInner.setBorder(BorderFactory.createMatteBorder(0,0,10,0,grey));
+
+        changeIcon.setMaximumSize(new Dimension(75, 25));
+        changeIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+        changeIcon.setBorder(null);
+        changeIcon.setIcon(new ImageIcon(createImage(75, 25, greyLight.darker())));
+        changeIcon.setForeground(Color.white);
+        changeIcon.setHorizontalTextPosition(SwingConstants.CENTER);
+        changeIcon.setVerticalTextPosition(SwingConstants.CENTER);
+        changeIcon.setBorderPainted(false);
+        changeIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                changeIcon.setIcon(new ImageIcon(createImage(75, 25, greyDark)));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                changeIcon.setIcon(new ImageIcon(createImage(75, 25, greyLight.darker())));
+            }
+        });
+
+        panel.add(Box.createRigidArea(new Dimension(0,10)));
+        panel.add(iconComps);
+        panel.add(Box.createVerticalGlue());
+
+        JButton back = new JButton("BACK");
+        back.setMaximumSize(new Dimension(50, 25));
+        back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        back.setBorder(null);
+        back.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+        back.setForeground(Color.white);
+        back.setHorizontalTextPosition(SwingConstants.CENTER);
+        back.setVerticalTextPosition(SwingConstants.CENTER);
+        back.setBorderPainted(false);
+        back.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                back.setIcon(new ImageIcon(createImage(50, 25, greyDark)));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                back.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setViewAsSelectServer();
+            }
+        });
+
+
+        JButton add = new JButton("ADD");
+        add.setMaximumSize(new Dimension(50, 25));
+        add.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add.setBorder(null);
+        add.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+        add.setForeground(Color.white);
+        add.setHorizontalTextPosition(SwingConstants.CENTER);
+        add.setVerticalTextPosition(SwingConstants.CENTER);
+        add.setBorderPainted(false);
+        add.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                add.setIcon(new ImageIcon(createImage(50, 25, greyDark)));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                add.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+            }
+        });
+
+
+
+        bottomPanel.add(Box.createRigidArea(new Dimension(238,0)));
+        bottomPanel.add(back);
+        bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+        bottomPanel.add(add);
+
+        panel.add(bottomPanel);
 
         frame.add(panel);
         frame.revalidate();
