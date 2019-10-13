@@ -17,6 +17,7 @@ public class CSVFile {
         return path;
     }
 
+    @SuppressWarnings("unused")
     public void printData(){
         for(String[] sa: data){
             for(String s: sa){
@@ -30,18 +31,22 @@ public class CSVFile {
         }
     }
 
+    @SuppressWarnings("unused")
     public int getWidth(){
         return data[0].length;
     }
 
+    @SuppressWarnings("unused")
     public int getHeight(){
         return data.length;
     }
 
+    @SuppressWarnings("unused")
     public void setData(String[][] newData){
         data = newData;
     }
 
+    @SuppressWarnings("unused")
     public void resizeData(int x, int y){
         int newX = Math.max(x, data[0].length);
         int newY = Math.max(y, data.length);
@@ -51,25 +56,28 @@ public class CSVFile {
         setRange(oldData, 0, 0);
     }
 
+    @SuppressWarnings("unused")
     public boolean setCell(String newData, int x, int y){
         if(data[0].length <= x || data.length <= y || 0 > x || 0 > y) return false;
         data[y][x] = newData;
         return true;
     }
 
-    public boolean setRange(String[][] newData, int x, int y){
-        if(data[0].length < x + newData[0].length || data.length < y + newData.length || 0 > x || 0 > y) return false;
+    @SuppressWarnings("all")
+    public void setRange(String[][] newData, int x, int y){
+        if(data[0].length < x + newData[0].length || data.length < y + newData.length || 0 > x || 0 > y) return;
         for(int k = y; k < y + newData.length; k++){
             System.arraycopy(newData[k-y], 0, data[k], x, newData[k-y].length);
         }
-        return true;
     }
 
+    @SuppressWarnings("unused")
     public String fetchCell(int x, int y){
         if(x < 0 || y < 0 || x > data[0].length || y > data.length) return null;
         return data[y][x];
     }
 
+    @SuppressWarnings("unused")
     public String[][] fetchRange(int x, int y, int w, int h){
         if(x < 0 || y < 0 || x + w > data[0].length || y + h > data.length) return null;
         String[][] range = new String[h][w];

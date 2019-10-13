@@ -1,7 +1,6 @@
 package io;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -16,7 +15,8 @@ class CSVReader {
             String line;
             int w = 0;
             while((line = fileReader.readLine()) != null){
-                sb.append(line + ";");
+                sb.append(line);
+                sb.append(";");
                 int i = line.split(",").length;
                 if(w < i) w = i;
             }

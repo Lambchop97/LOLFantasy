@@ -4,9 +4,7 @@ import components.ServerCard;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLabelUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
-import javax.swing.plaf.metal.MetalTextFieldUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +24,9 @@ public class StartUp {
 
     private static JPanel currentPanel;
 
+    @SuppressWarnings("all")
     public static Color greyLight = new Color(150,150,150);
+    @SuppressWarnings("all")
     public static Color grey = new Color(65,65,65);
     public static Color greyDark = new Color(48,48,48);
     public static Color brickRed = new Color(178,34,34);
@@ -54,6 +54,7 @@ public class StartUp {
         createDir();
     }
 
+    @SuppressWarnings("all")
     public static void setViewAsStartButtons(){
         if(currentPanel != null) resetFrame();
 
@@ -162,14 +163,14 @@ public class StartUp {
             @Override
             protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                ((Graphics2D) g).drawImage(createImage(32, 32, greyLight.darker()), r.x , r.y, r.width, r.height, null);
+                g.drawImage(createImage(32, 32, greyLight.darker()), r.x , r.y, r.width, r.height, null);
                 g.dispose();
             }
 
             @Override
             protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                ((Graphics2D) g).drawImage(createImage(32, 32, greyLight), r.x , r.y, r.width, r.height, null);
+                g.drawImage(createImage(32, 32, greyLight), r.x , r.y, r.width, r.height, null);
                 g.dispose();
             }
 
@@ -196,7 +197,7 @@ public class StartUp {
 
         File[] files = home.listFiles();
 
-        for(File f: files){
+        if(files != null ) for(File f: files){
             if(f.isDirectory()){
                 ServerCard card = new ServerCard(f.getAbsolutePath());
                 scrollingContent.add(card);
@@ -393,13 +394,7 @@ public class StartUp {
             }
         });
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setViewAsSelectServer();
-            }
-        });
-
+        back.addActionListener(e -> setViewAsSelectServer());
 
         JButton add = new JButton("ADD");
         add.setMaximumSize(new Dimension(50, 25));
@@ -471,6 +466,7 @@ public class StartUp {
 
     }
 
+    @SuppressWarnings("all")
     public static void startAsClient(){
         setViewAsSelectServer();
     }
@@ -480,6 +476,7 @@ public class StartUp {
         new File(System.getProperty("user.home") + "/LOLFantasy").mkdir();
     }
 
+    @SuppressWarnings("all")
     static public Image createImage(int w, int h, Color c) {
         BufferedImage bi = new BufferedImage(
                 w, h, BufferedImage.TYPE_INT_ARGB);
@@ -490,6 +487,7 @@ public class StartUp {
         return bi;
     }
 
+    @SuppressWarnings("all")
     public static void createServerFiles(String name, String desc, String ip, Icon icon){
         name = name.trim();
         String folder = HOME_PATH + "/" + name;

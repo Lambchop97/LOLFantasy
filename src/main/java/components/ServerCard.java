@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 
 public class ServerCard extends JPanel {
 
@@ -21,7 +22,8 @@ public class ServerCard extends JPanel {
 
     static {
         try {
-            defaultIcon = ImageIO.read(ServerCard.class.getClassLoader().getResource("plus.png"));
+            URL url = ServerCard.class.getClassLoader().getResource("plus.png");
+            if(url != null) defaultIcon = ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -157,18 +159,19 @@ public class ServerCard extends JPanel {
         }
     }
 
-    public void delete(){
+    private void delete(){
         File file = new File(StartUp.HOME_PATH + "/" + name);
 
         deleteFile(file);
     }
 
-    private static boolean deleteFile(File file){
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static void deleteFile(File file){
         File[] files = file.listFiles();
         if(files != null) for(File f: files){
             deleteFile(f);
         }
-        return file.delete();
+        file.delete();
     }
 
 }
