@@ -2,6 +2,7 @@ package start;
 
 import components.ServerCard;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLabelUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
@@ -12,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
 
 public class StartUp {
 
@@ -29,6 +30,8 @@ public class StartUp {
     public static Color grey = new Color(65,65,65);
     public static Color greyDark = new Color(48,48,48);
     public static Color brickRed = new Color(178,34,34);
+
+    private static Timer addServerWarningTimer;
 
     public static void main(String[] args) {
 
@@ -160,12 +163,14 @@ public class StartUp {
             protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
                 ((Graphics2D) g).drawImage(createImage(32, 32, greyLight.darker()), r.x , r.y, r.width, r.height, null);
+                g.dispose();
             }
 
             @Override
             protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
                 ((Graphics2D) g).drawImage(createImage(32, 32, greyLight), r.x , r.y, r.width, r.height, null);
+                g.dispose();
             }
 
             @Override
@@ -416,6 +421,35 @@ public class StartUp {
                 add.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
             }
         });
+        add.addActionListener(e -> {
+            if(nameField.getText().matches("")){
+                if(addServerWarningTimer == null){
+
+                    Component area = Box.createRigidArea(new Dimension(0,40));
+                    JLabel warning = new JLabel("PLEASE ENTER A NAME");
+                    warning.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    warning.setForeground(brickRed.brighter());
+                    warning.setFont(warning.getFont().deriveFont(20f));
+                    addServerWarningTimer = new Timer(0 , al -> {
+                        panel.remove(area);
+                            panel.remove(warning);
+                            panel.revalidate();
+                            panel.repaint();
+                            addServerWarningTimer = null;
+                    });
+                    addServerWarningTimer.setRepeats(false);
+                    addServerWarningTimer.setInitialDelay(2000);
+                    addServerWarningTimer.start();
+                    panel.add(area,panel.getComponents().length - 2);
+                    panel.add(warning, panel.getComponents().length - 2);
+                    panel.revalidate();
+                    panel.repaint();
+                }
+            } else {
+                createServerFiles(nameField.getText(), descField.getText(), ipField.getText(), icon.getIcon());
+                setViewAsSelectServer();
+            }
+        });
 
 
 
@@ -454,5 +488,36 @@ public class StartUp {
         g2d.fillRect(0, 0, w, h);
         g2d.dispose();
         return bi;
+    }
+
+    public static void createServerFiles(String name, String desc, String ip, Icon icon){
+        name = name.trim();
+        String folder = HOME_PATH + "/" + name;
+        File file = new File(folder);
+        file.mkdir();
+
+        if(!desc.matches("")) try {
+            File descFile = new File(folder + "/desc.txt");
+            descFile.createNewFile();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(folder + "/desc.txt"));
+            writer.write(desc);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+
+        Graphics g = image.getGraphics();
+        icon.paintIcon(null, g, 0,0);
+        g.dispose();
+
+        File iconFile = new File(folder + "/icon.png");
+        try {
+            ImageIO.write(image, "png", iconFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
