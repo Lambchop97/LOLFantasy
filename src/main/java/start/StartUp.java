@@ -1,9 +1,11 @@
 package start;
 
 import components.ServerCard;
+import gui.UIColors;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,13 +25,6 @@ public class StartUp {
     private static JButton startAsClient;
 
     private static JPanel currentPanel;
-
-    @SuppressWarnings("all")
-    public static Color greyLight = new Color(150,150,150);
-    @SuppressWarnings("all")
-    public static Color grey = new Color(65,65,65);
-    public static Color greyDark = new Color(48,48,48);
-    public static Color brickRed = new Color(178,34,34);
 
     private static Timer addServerWarningTimer;
 
@@ -66,7 +61,7 @@ public class StartUp {
         startAsClient = new JButton("CLIENT");
         startAsClient.setMaximumSize(new Dimension(200, 50));
         startAsClient.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startAsClient.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
+        startAsClient.setIcon(new ImageIcon(createImage(200, 50, UIColors.greyLight.darker())));
         startAsClient.setForeground(Color.white);
         startAsClient.setHorizontalTextPosition(SwingConstants.CENTER);
         startAsClient.setVerticalTextPosition(SwingConstants.CENTER);
@@ -74,12 +69,12 @@ public class StartUp {
         startAsClient.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                startAsClient.setIcon(new ImageIcon(createImage(200, 50, greyDark)));
+                startAsClient.setIcon(new ImageIcon(createImage(200, 50, UIColors.greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                startAsClient.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
+                startAsClient.setIcon(new ImageIcon(createImage(200, 50, UIColors.greyLight.darker())));
             }
         });
 
@@ -96,7 +91,7 @@ public class StartUp {
         startAsServer = new JButton("SERVER");
         startAsServer.setMaximumSize(new Dimension(200, 50));
         startAsServer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startAsServer.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
+        startAsServer.setIcon(new ImageIcon(createImage(200, 50, UIColors.greyLight.darker())));
         startAsServer.setForeground(Color.white);
         startAsServer.setHorizontalTextPosition(SwingConstants.CENTER);
         startAsServer.setVerticalTextPosition(SwingConstants.CENTER);
@@ -104,12 +99,12 @@ public class StartUp {
         startAsServer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                startAsServer.setIcon(new ImageIcon(createImage(200, 50, greyDark)));
+                startAsServer.setIcon(new ImageIcon(createImage(200, 50, UIColors.greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                startAsServer.setIcon(new ImageIcon(createImage(200, 50, greyLight.darker())));
+                startAsServer.setIcon(new ImageIcon(createImage(200, 50, UIColors.greyLight.darker())));
             }
         });
 
@@ -123,7 +118,7 @@ public class StartUp {
         panel.add(startAsServer);
 
         currentPanel = panel;
-        panel.setBackground(grey);
+        panel.setBackground(UIColors.grey);
         frame.add(panel);
         frame.revalidate();
         frame.repaint();
@@ -163,15 +158,13 @@ public class StartUp {
             @Override
             protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                g.drawImage(createImage(32, 32, greyLight.darker()), r.x , r.y, r.width, r.height, null);
-                g.dispose();
+                g.drawImage(createImage(32, 32, UIColors.greyLight.darker()), r.x , r.y, r.width, r.height, null);
             }
 
             @Override
             protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
                 g.setColor(Color.blue);
-                g.drawImage(createImage(32, 32, greyLight), r.x , r.y, r.width, r.height, null);
-                g.dispose();
+                g.drawImage(createImage(32, 32, UIColors.greyLight), r.x , r.y, r.width, r.height, null);
             }
 
             @Override
@@ -188,8 +181,7 @@ public class StartUp {
         list.getVerticalScrollBar().setUnitIncrement(10);
         list.setBorder(null);
 
-        ServerCard newCard = new ServerCard("");
-        newCard.switchToNewServerCard();
+        ServerCard newCard = new ServerCard();
 
         scrollingContent.setLayout(new BoxLayout(scrollingContent, BoxLayout.PAGE_AXIS));
 
@@ -212,7 +204,7 @@ public class StartUp {
         panel.add(Box.createRigidArea(new Dimension(0,9)));
 
 
-        panel.setBackground(grey);
+        panel.setBackground(UIColors.grey);
 
         currentPanel = panel;
 
@@ -229,20 +221,20 @@ public class StartUp {
         currentPanel = panel;
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.setBorder(BorderFactory.createMatteBorder(0,0,10,0, grey));
+        panel.setBorder(BorderFactory.createMatteBorder(0,0,10,0, UIColors.grey));
 
         JPanel nameComps = new JPanel();
         JPanel ipComps = new JPanel();
         JPanel descComps = new JPanel();
 
-        nameComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,grey));
-        ipComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,grey));
-        descComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,grey));
+        nameComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,UIColors.grey));
+        ipComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,UIColors.grey));
+        descComps.setBorder(BorderFactory.createMatteBorder(0,10,0,10,UIColors.grey));
 
-        panel.setBackground(grey);
-        nameComps.setBackground(grey);
-        ipComps.setBackground(grey);
-        descComps.setBackground(grey);
+        panel.setBackground(UIColors.grey);
+        nameComps.setBackground(UIColors.grey);
+        ipComps.setBackground(UIColors.grey);
+        descComps.setBackground(UIColors.grey);
 
         nameComps.setLayout(new BoxLayout(nameComps, BoxLayout.LINE_AXIS));
         ipComps.setLayout(new BoxLayout(ipComps, BoxLayout.LINE_AXIS));
@@ -262,12 +254,13 @@ public class StartUp {
 
         name.setAlignmentX(Component.RIGHT_ALIGNMENT);
         name.setForeground(Color.white);
-        name.setBorder(BorderFactory.createMatteBorder(0,0,0,5, grey));
+        name.setBorder(BorderFactory.createMatteBorder(0,0,0,5, UIColors.grey));
 
         nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
-        nameField.setBackground(greyLight);
+        nameField.setBackground(UIColors.greyLight);
         nameField.setForeground(Color.white);
-        nameField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,greyLight));
+        nameField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,UIColors.greyLight));
+        nameField.requestFocus();
         Font f = nameField.getFont();
         nameField.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
 
@@ -276,12 +269,12 @@ public class StartUp {
 
         ip.setAlignmentX(Component.RIGHT_ALIGNMENT);
         ip.setForeground(Color.white);
-        ip.setBorder(BorderFactory.createMatteBorder(0,0,0,5,grey));
+        ip.setBorder(BorderFactory.createMatteBorder(0,0,0,5,UIColors.grey));
 
         ipField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
-        ipField.setBackground(greyLight);
+        ipField.setBackground(UIColors.greyLight);
         ipField.setForeground(Color.white);
-        ipField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,greyLight));
+        ipField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,UIColors.greyLight));
         f = ipField.getFont();
         ipField.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
 
@@ -290,12 +283,12 @@ public class StartUp {
 
         desc.setAlignmentX(Component.RIGHT_ALIGNMENT);
         desc.setForeground(Color.white);
-        desc.setBorder(BorderFactory.createMatteBorder(0,0,0,5, grey));
+        desc.setBorder(BorderFactory.createMatteBorder(0,0,0,5, UIColors.grey));
 
         descField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
-        descField.setBackground(greyLight);
+        descField.setBackground(UIColors.greyLight);
         descField.setForeground(Color.white);
-        descField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,greyLight));
+        descField.setBorder(BorderFactory.createMatteBorder(1,1,1,1,UIColors.greyLight));
         f = descField.getFont();
         descField.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
 
@@ -318,7 +311,7 @@ public class StartUp {
         JPanel bottomPanel = new JPanel();
 
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
-        bottomPanel.setBackground(grey);
+        bottomPanel.setBackground(UIColors.grey);
 
         JPanel iconComps = new JPanel();
 
@@ -332,13 +325,13 @@ public class StartUp {
         JLabel iconInner = new JLabel("ICON:");
         JButton changeIcon = new JButton("CHANGE");
 
-        iconComps.setBackground(grey);
-        iconCompsInner.setBackground(grey);
+        iconComps.setBackground(UIColors.grey);
+        iconCompsInner.setBackground(UIColors.grey);
         iconInner.setAlignmentX(Component.RIGHT_ALIGNMENT);
         iconInner.setForeground(Color.white);
         changeIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        icon.setBorder(BorderFactory.createMatteBorder(0,10,0,0, grey));
+        icon.setBorder(BorderFactory.createMatteBorder(0,10,0,0, UIColors.grey));
 
         iconComps.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -347,12 +340,12 @@ public class StartUp {
         iconComps.add(iconCompsInner);
         iconComps.add(changeIcon);
 
-        iconCompsInner.setBorder(BorderFactory.createMatteBorder(0,0,10,0,grey));
+        iconCompsInner.setBorder(BorderFactory.createMatteBorder(0,0,10,0,UIColors.grey));
 
         changeIcon.setMaximumSize(new Dimension(75, 25));
         changeIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         changeIcon.setBorder(null);
-        changeIcon.setIcon(new ImageIcon(createImage(75, 25, greyLight.darker())));
+        changeIcon.setIcon(new ImageIcon(createImage(75, 25, UIColors.greyLight.darker())));
         changeIcon.setForeground(Color.white);
         changeIcon.setHorizontalTextPosition(SwingConstants.CENTER);
         changeIcon.setVerticalTextPosition(SwingConstants.CENTER);
@@ -360,13 +353,45 @@ public class StartUp {
         changeIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                changeIcon.setIcon(new ImageIcon(createImage(75, 25, greyDark)));
+                changeIcon.setIcon(new ImageIcon(createImage(75, 25, UIColors.greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                changeIcon.setIcon(new ImageIcon(createImage(75, 25, greyLight.darker())));
+                changeIcon.setIcon(new ImageIcon(createImage(75, 25, UIColors.greyLight.darker())));
             }
+        });
+        changeIcon.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser(){
+                @Override
+                public boolean accept(File f) {
+                    if(f.isDirectory()) return true;
+
+                    String ext = null;
+                    String name = f.getName();
+                    int i = name.lastIndexOf(".");
+
+                    if(i > 0 && i < name.length() - 1) {
+                        ext = name.substring(i+1).toLowerCase();
+                    }
+
+                    return (ext != null && ext.equals("png"));
+                }
+            };
+            chooser.updateUI();
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            SwingUtilities.updateComponentTreeUI(chooser);
+
+            try {
+                UIManager.setLookAndFeel(MetalLookAndFeel.class.getName());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            chooser.showOpenDialog(null);
         });
 
         panel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -377,7 +402,7 @@ public class StartUp {
         back.setMaximumSize(new Dimension(50, 25));
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
         back.setBorder(null);
-        back.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+        back.setIcon(new ImageIcon(createImage(50, 25, UIColors.greyLight.darker())));
         back.setForeground(Color.white);
         back.setHorizontalTextPosition(SwingConstants.CENTER);
         back.setVerticalTextPosition(SwingConstants.CENTER);
@@ -385,12 +410,12 @@ public class StartUp {
         back.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                back.setIcon(new ImageIcon(createImage(50, 25, greyDark)));
+                back.setIcon(new ImageIcon(createImage(50, 25, UIColors.greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                back.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+                back.setIcon(new ImageIcon(createImage(50, 25, UIColors.greyLight.darker())));
             }
         });
 
@@ -400,7 +425,7 @@ public class StartUp {
         add.setMaximumSize(new Dimension(50, 25));
         add.setAlignmentX(Component.CENTER_ALIGNMENT);
         add.setBorder(null);
-        add.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+        add.setIcon(new ImageIcon(createImage(50, 25, UIColors.greyLight.darker())));
         add.setForeground(Color.white);
         add.setHorizontalTextPosition(SwingConstants.CENTER);
         add.setVerticalTextPosition(SwingConstants.CENTER);
@@ -408,12 +433,12 @@ public class StartUp {
         add.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                add.setIcon(new ImageIcon(createImage(50, 25, greyDark)));
+                add.setIcon(new ImageIcon(createImage(50, 25, UIColors.greyDark)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                add.setIcon(new ImageIcon(createImage(50, 25, greyLight.darker())));
+                add.setIcon(new ImageIcon(createImage(50, 25, UIColors.greyLight.darker())));
             }
         });
         add.addActionListener(e -> {
@@ -423,14 +448,14 @@ public class StartUp {
                     Component area = Box.createRigidArea(new Dimension(0,40));
                     JLabel warning = new JLabel("PLEASE ENTER A NAME");
                     warning.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    warning.setForeground(brickRed.brighter());
+                    warning.setForeground(UIColors.brickRed.brighter());
                     warning.setFont(warning.getFont().deriveFont(20f));
                     addServerWarningTimer = new Timer(0 , al -> {
                         panel.remove(area);
-                            panel.remove(warning);
-                            panel.revalidate();
-                            panel.repaint();
-                            addServerWarningTimer = null;
+                        panel.remove(warning);
+                        panel.revalidate();
+                        panel.repaint();
+                        addServerWarningTimer = null;
                     });
                     addServerWarningTimer.setRepeats(false);
                     addServerWarningTimer.setInitialDelay(2000);
@@ -492,6 +517,7 @@ public class StartUp {
         name = name.trim();
         String folder = HOME_PATH + "/" + name;
         File file = new File(folder);
+        if(file.exists()) return;
         file.mkdir();
 
         if(!desc.matches("")) try {

@@ -1,5 +1,6 @@
 package components;
 
+import gui.UIColors;
 import start.StartUp;
 
 import javax.imageio.ImageIO;
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 
-public class ServerCard extends JPanel {
+public class ServerCard extends JLayeredPane {
 
     private String name;
     private String description;
@@ -20,20 +21,72 @@ public class ServerCard extends JPanel {
 
     public static BufferedImage defaultIcon;
 
+    private JPanel content;
+
+    private Timer deleteAnimationTimer;
+    private Timer resetDeleteTimer;
+
+    int r = UIColors.brickRed.darker().getRed();
+    int g = UIColors.brickRed.darker().getGreen();
+    int b = UIColors.brickRed.darker().getBlue();
+
+    private boolean deleteMode = false;
+    private boolean canDelete = false;
+
     static {
         try {
-            URL url = ServerCard.class.getClassLoader().getResource("plus.png");
+            URL url = ServerCard.class.getClassLoader().getResource("icon.png");
             if(url != null) defaultIcon = ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public ServerCard(){
+        this.setPreferredSize(new Dimension(333, 64));
+        content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+        content.setMinimumSize(new Dimension(0, 64));
+        content.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
+        content.setBackground(UIColors.greyDark);
+        name = "new server";
+        description = "template";
+
+        image = null;
+
+        try {
+            URL url = ServerCard.class.getClassLoader().getResource("plus.png");
+            image = new JLabel(new ImageIcon(ImageIO.read(url)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(image == null)
+            System.out.println("img is null");
+        else{
+            image.setPreferredSize(new Dimension(32, 32));
+            image.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            content.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    StartUp.setViewAsAddServer();
+                }
+            });
+
+            content.add(Box.createRigidArea(new Dimension(0, 16)));
+            content.add(image);
+            content.setBounds(0,0,333,64);
+            this.add(content, Integer.valueOf(1));
+        }
+    }
+
     public ServerCard(String path){
+        this.setPreferredSize(new Dimension(333, 64));
         name = path.split("\\\\")[path.split("\\\\").length - 1];
         description = "This is a default description";
 
         if(path.matches("")) return;
+
 
         if(new File(path + "/desc.txt").exists()){
             try {
@@ -45,42 +98,27 @@ public class ServerCard extends JPanel {
             }
         }
 
+        image = null;
+        readIcon(path + "/icon.png");
 
-        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-        this.setMinimumSize(new Dimension(0, 64));
-        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
-        this.setBackground(StartUp.greyDark);
-        this.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.gray));
-
-        BufferedImage img = null;
-
-        try {
-            if(new File(path + "/Icon.png").exists())
-                img = ImageIO.read(new File(path + "/Icon.png"));
-            else
-                img = defaultIcon;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(img == null) {
+        if(image == null) {
             System.out.println("img is null");
-        }
-        else{
-            image = new JLabel(new ImageIcon(img));
-            image.setPreferredSize(new Dimension(32, 32));
-            image.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            image.setVisible(true);
-
-            this.addMouseListener(new MouseAdapter() {
+        } else{
+            content = new JPanel();
+            content.setLayout(new BoxLayout(content, BoxLayout.LINE_AXIS));
+            content.setBackground(UIColors.greyDark);
+            content.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.gray));
+            content.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
+                    if(!deleteMode)
                     System.out.println(name + " has been clicky clicked");
                 }
             });
 
-            this.add(Box.createRigidArea(new Dimension(16, 0)));
-            this.add(image);
-            this.add(Box.createRigidArea(new Dimension(16, 0 )));
+            content.add(Box.createRigidArea(new Dimension(16, 0)));
+            content.add(image);
+            content.add(Box.createRigidArea(new Dimension(16, 0 )));
 
             JPanel text = new JPanel();
 
@@ -89,7 +127,7 @@ public class ServerCard extends JPanel {
             JLabel nameLabel = new JLabel(name);
             JLabel discLabel = new JLabel(description);
 
-            text.setBackground(StartUp.greyDark);
+            text.setBackground(UIColors.greyDark);
             nameLabel.setForeground(Color.white);
             discLabel.setForeground(Color.white);
 
@@ -98,65 +136,138 @@ public class ServerCard extends JPanel {
             text.add(Box.createRigidArea(new Dimension(0, 4)));
             text.add(discLabel);
             text.add(Box.createRigidArea(new Dimension(0, 12)));
+            text.setBorder(BorderFactory.createMatteBorder(0,0,10,0,UIColors.greyDark));
 
-            this.add(text);
-            this.add(Box.createHorizontalGlue());
+            content.add(text);
+            content.add(Box.createHorizontalGlue());
 
             JPanel deletePanel = new JPanel();
 
             deletePanel.setLayout(new BoxLayout(deletePanel, BoxLayout.PAGE_AXIS));
 
             JLabel delete = new JLabel("X");
-            deletePanel.setBackground(StartUp.greyDark);
+            deletePanel.setBackground(UIColors.greyDark);
 
-            delete.setForeground(StartUp.brickRed);
+
+            JPanel test = new JPanel(){
+                @Override
+                protected void paintComponent(Graphics g) {
+                    g.setColor(getBackground());
+                    Rectangle r = g.getClipBounds();
+                    g.fillRect(r.x,r.y,r.width,r.height);
+                    super.paintComponent(g);
+                }
+            };
+            test.setBounds(333,0,0,64);
+            test.setBackground(new Color(178, 34 ,34, 255));
+            test.setOpaque(false);
+
+            JLabel testDelete = new JLabel("DELETE");
+            testDelete.setFont(testDelete.getFont().deriveFont(22f));
+            testDelete.setBounds(166,0,60,40);
+            testDelete.setForeground(UIColors.brickRed.darker());
+
+            testDelete.setAlignmentX(CENTER_ALIGNMENT);
+
+            test.add(testDelete);
+
+            resetDeleteTimer = new Timer(2, e -> {
+               int alpha = test.getBackground().getAlpha();
+               alpha -= 2;
+               if(alpha <= 0){
+                   alpha = 0;
+                   resetDeleteTimer.stop();
+                   test.setBounds(333, 0, 0, 64);
+                   deleteMode = false;
+               }
+               test.setBackground(new Color(178,34,34, alpha));
+               testDelete.setForeground(new Color(r,g,b,alpha));
+               canDelete = false;
+
+            });
+            resetDeleteTimer.setInitialDelay(2000);
+
+
+
+            deleteAnimationTimer = new Timer(2, e -> {
+                int width = test.getWidth();
+                width += 2;
+                if(width >= 333){
+                    width = 333;
+                    deleteAnimationTimer.stop();
+                    resetDeleteTimer.start();
+                    canDelete = true;
+                }
+                test.setBounds(333 - width, 0, width, 64);
+                testDelete.setBounds(125,10,160,40);
+            });
+            deleteAnimationTimer.setInitialDelay(100);
+
+            test.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                     if(canDelete){
+                         delete();
+                         StartUp.setViewAsSelectServer();
+                         deleteAnimationTimer.stop();
+                         resetDeleteTimer.stop();
+                     }
+                }
+            });
+
+
+            delete.setForeground(UIColors.brickRed);
             delete.setAlignmentY(TOP_ALIGNMENT);
+            delete.setFont(delete.getFont().deriveFont(18f));
             delete.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    System.out.println("delete");
-                    delete();
-                    StartUp.setViewAsSelectServer();
+                    if(!deleteMode){
+                        System.out.println("delete");
+
+                        test.setBounds(333, 0, 0, 64);
+                        test.setBackground(new Color(178,34,34,255));
+                        testDelete.setForeground(UIColors.brickRed.darker());
+                        deleteAnimationTimer.restart();
+                        deleteMode = true;
+                    }
                 }
             });
 
             deletePanel.add(delete);
             deletePanel.setBorder(BorderFactory.createMatteBorder(0,0,0,5,new Color(48,48,48)));
 
-            this.add(deletePanel);
+            content.add(deletePanel);
+
+            content.setBounds(0,0, 333, 64);
+            this.add(content, Integer.valueOf(1));
+
+
+            this.add(test, Integer.valueOf(2));
+            this.revalidate();
+            this.repaint();
         }
     }
 
-
-    public void switchToNewServerCard(){
-        this.removeAll();
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        name = "new server";
-        description = "template";
+    private void readIcon(String path){
+        BufferedImage img = null;
 
 
-
-        if(defaultIcon == null)
-            System.out.println("img is null");
-        else{
-            image = new JLabel(new ImageIcon(defaultIcon));
-            image.setPreferredSize(new Dimension(32, 32));
-            image.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            image.setVisible(true);
-
-            this.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    StartUp.setViewAsAddServer();
-                }
-            });
-
-            this.add(Box.createRigidArea(new Dimension(0,16)));
-            this.add(image);
-            this.add(Box.createRigidArea(new Dimension(0,12)));
-            this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
-            this.setBackground(new Color(48, 48, 48));
+        try {
+            File file = new File(path);
+            if(file.exists())
+                img = ImageIO.read(file);
+            else
+                img = defaultIcon;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        if(img == null) return;
+        image = new JLabel(new ImageIcon(img));
+        image.setPreferredSize(new Dimension(32, 32));
+        image.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     }
 
     private void delete(){
