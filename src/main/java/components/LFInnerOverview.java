@@ -15,14 +15,22 @@ public class LFInnerOverview {
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.setBackground(UIUtils.grey);
         content.setMaximumSize(new Dimension(1280, 694));
+
         content.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel innerContent = new JPanel();
 
         innerContent.setLayout(new BoxLayout(innerContent, BoxLayout.LINE_AXIS));
         innerContent.setBackground(UIUtils.greyLight);
-        innerContent.setMaximumSize(new Dimension(1280, 534));
+        innerContent.setMaximumSize(new Dimension(1315, 534));
         innerContent.setBorder(BorderFactory.createMatteBorder(5,5,5,5,UIUtils.grey));
+
+        LFStandingsPanel standingsPanel = new LFStandingsPanel();
+
+        LFMatchesPanel matchesPanel = new LFMatchesPanel();
+
+        innerContent.add(matchesPanel.getContent());
+        innerContent.add(standingsPanel.getContent());
 
         LFTradePanel tradePanel = new LFTradePanel();
 
