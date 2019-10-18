@@ -1,6 +1,7 @@
 package components;
 
-import gui.UIColors;
+import gui.FrameManager;
+import gui.UIUtils;
 import start.StartUp;
 
 import javax.imageio.ImageIO;
@@ -12,23 +13,23 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 
-public class ServerCard extends JLayeredPane {
+class ServerCard extends JLayeredPane {
 
     private String name;
     private String description;
 
     private JLabel image;
 
-    public static BufferedImage defaultIcon;
+    static BufferedImage defaultIcon;
 
     private JPanel content;
 
     private Timer deleteAnimationTimer;
     private Timer resetDeleteTimer;
 
-    int r = UIColors.brickRed.darker().getRed();
-    int g = UIColors.brickRed.darker().getGreen();
-    int b = UIColors.brickRed.darker().getBlue();
+    private int r = UIUtils.brickRed.darker().getRed();
+    private int g = UIUtils.brickRed.darker().getGreen();
+    private int b = UIUtils.brickRed.darker().getBlue();
 
     private boolean deleteMode = false;
     private boolean canDelete = false;
@@ -42,13 +43,13 @@ public class ServerCard extends JLayeredPane {
         }
     }
 
-    public ServerCard(){
+    ServerCard(){
         this.setPreferredSize(new Dimension(333, 64));
         content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.setMinimumSize(new Dimension(0, 64));
         content.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
-        content.setBackground(UIColors.greyDark);
+        content.setBackground(UIUtils.greyDark);
         name = "new server";
         description = "template";
 
@@ -69,7 +70,7 @@ public class ServerCard extends JLayeredPane {
             content.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    StartUp.setViewAsAddServer();
+                    FrameManager.setCurrentContent(new LFAddServerScreen().getContent());
                 }
             });
 
@@ -80,7 +81,7 @@ public class ServerCard extends JLayeredPane {
         }
     }
 
-    public ServerCard(String path){
+    ServerCard(String path){
         this.setPreferredSize(new Dimension(333, 64));
         name = path.split("\\\\")[path.split("\\\\").length - 1];
         description = "This is a default description";
@@ -106,13 +107,15 @@ public class ServerCard extends JLayeredPane {
         } else{
             content = new JPanel();
             content.setLayout(new BoxLayout(content, BoxLayout.LINE_AXIS));
-            content.setBackground(UIColors.greyDark);
+            content.setBackground(UIUtils.greyDark);
             content.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.gray));
             content.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    if(!deleteMode)
-                    System.out.println(name + " has been clicky clicked");
+                    if(!deleteMode){
+                        System.out.println(name + " has been clicky clicked");
+                        FrameManager.resizeFrame(1280, 720);
+                    }
                 }
             });
 
@@ -127,7 +130,7 @@ public class ServerCard extends JLayeredPane {
             JLabel nameLabel = new JLabel(name);
             JLabel discLabel = new JLabel(description);
 
-            text.setBackground(UIColors.greyDark);
+            text.setBackground(UIUtils.greyDark);
             nameLabel.setForeground(Color.white);
             discLabel.setForeground(Color.white);
 
@@ -136,7 +139,7 @@ public class ServerCard extends JLayeredPane {
             text.add(Box.createRigidArea(new Dimension(0, 4)));
             text.add(discLabel);
             text.add(Box.createRigidArea(new Dimension(0, 12)));
-            text.setBorder(BorderFactory.createMatteBorder(0,0,10,0,UIColors.greyDark));
+            text.setBorder(BorderFactory.createMatteBorder(0,0,10,0, UIUtils.greyDark));
 
             content.add(text);
             content.add(Box.createHorizontalGlue());
@@ -146,7 +149,7 @@ public class ServerCard extends JLayeredPane {
             deletePanel.setLayout(new BoxLayout(deletePanel, BoxLayout.PAGE_AXIS));
 
             JLabel delete = new JLabel("X");
-            deletePanel.setBackground(UIColors.greyDark);
+            deletePanel.setBackground(UIUtils.greyDark);
 
 
             JPanel test = new JPanel(){
@@ -165,7 +168,7 @@ public class ServerCard extends JLayeredPane {
             JLabel testDelete = new JLabel("DELETE");
             testDelete.setFont(testDelete.getFont().deriveFont(22f));
             testDelete.setBounds(166,0,60,40);
-            testDelete.setForeground(UIColors.brickRed.darker());
+            testDelete.setForeground(UIUtils.brickRed.darker());
 
             testDelete.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -209,7 +212,7 @@ public class ServerCard extends JLayeredPane {
                 public void mouseReleased(MouseEvent e) {
                      if(canDelete){
                          delete();
-                         StartUp.setViewAsSelectServer();
+                         FrameManager.setCurrentContent(new LFSelectServerScreen().getContent());
                          deleteAnimationTimer.stop();
                          resetDeleteTimer.stop();
                      }
@@ -217,7 +220,7 @@ public class ServerCard extends JLayeredPane {
             });
 
 
-            delete.setForeground(UIColors.brickRed);
+            delete.setForeground(UIUtils.brickRed);
             delete.setAlignmentY(TOP_ALIGNMENT);
             delete.setFont(delete.getFont().deriveFont(18f));
             delete.addMouseListener(new MouseAdapter() {
@@ -228,7 +231,7 @@ public class ServerCard extends JLayeredPane {
 
                         test.setBounds(333, 0, 0, 64);
                         test.setBackground(new Color(178,34,34,255));
-                        testDelete.setForeground(UIColors.brickRed.darker());
+                        testDelete.setForeground(UIUtils.brickRed.darker());
                         deleteAnimationTimer.restart();
                         deleteMode = true;
                     }
