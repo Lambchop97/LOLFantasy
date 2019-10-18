@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 
-class ServerCard extends JLayeredPane {
+class LFServerCard extends JLayeredPane {
 
     private String name;
     private String description;
@@ -36,14 +36,14 @@ class ServerCard extends JLayeredPane {
 
     static {
         try {
-            URL url = ServerCard.class.getClassLoader().getResource("icon.png");
+            URL url = LFServerCard.class.getClassLoader().getResource("icon.png");
             if(url != null) defaultIcon = ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    ServerCard(){
+    LFServerCard(){
         this.setPreferredSize(new Dimension(333, 64));
         content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
@@ -56,7 +56,7 @@ class ServerCard extends JLayeredPane {
         image = null;
 
         try {
-            URL url = ServerCard.class.getClassLoader().getResource("plus.png");
+            URL url = LFServerCard.class.getClassLoader().getResource("plus.png");
             image = new JLabel(new ImageIcon(ImageIO.read(url)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,7 +81,7 @@ class ServerCard extends JLayeredPane {
         }
     }
 
-    ServerCard(String path){
+    LFServerCard(String path){
         this.setPreferredSize(new Dimension(333, 64));
         name = path.split("\\\\")[path.split("\\\\").length - 1];
         description = "This is a default description";
@@ -114,6 +114,7 @@ class ServerCard extends JLayeredPane {
                 public void mouseReleased(MouseEvent e) {
                     if(!deleteMode){
                         System.out.println(name + " has been clicky clicked");
+                        FrameManager.setCurrentContent(new LFOverviewScreen().getContent());
                         FrameManager.resizeFrame(1280, 720);
                     }
                 }

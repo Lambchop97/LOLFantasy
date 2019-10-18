@@ -63,7 +63,7 @@ public class LFSelectServerScreen extends LFScreen{
         list.getVerticalScrollBar().setUnitIncrement(10);
         list.setBorder(null);
 
-        ServerCard newCard = new ServerCard();
+        LFServerCard newCard = new LFServerCard();
 
         scrollingContent.setLayout(new BoxLayout(scrollingContent, BoxLayout.PAGE_AXIS));
 
@@ -73,7 +73,7 @@ public class LFSelectServerScreen extends LFScreen{
 
         if(files != null ) for(File f: files){
             if(f.isDirectory()){
-                ServerCard card = new ServerCard(f.getAbsolutePath());
+                LFServerCard card = new LFServerCard(f.getAbsolutePath());
                 scrollingContent.add(card);
             }
         }

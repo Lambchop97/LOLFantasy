@@ -9,6 +9,8 @@ public class FrameManager {
 
     private static JPanel currentContent;
 
+
+
     public static void setCurrentContent(JPanel content){
         if(currentContent != null) resetFrame();
         currentContent = content;

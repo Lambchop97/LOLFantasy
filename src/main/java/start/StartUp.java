@@ -22,7 +22,6 @@ public class StartUp {
     private static JButton startAsServer;
     private static JButton startAsClient;
 
-    private static JPanel currentPanel;
 
     public static void main(String[] args) {
 
@@ -48,8 +47,6 @@ public class StartUp {
 
     @SuppressWarnings("all")
     public static void setViewAsStartButtons(){
-        if(currentPanel != null) resetFrame();
-
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
@@ -118,12 +115,6 @@ public class StartUp {
 
         panel.setMaximumSize(new Dimension(384, 448));
         FrameManager.setCurrentContent(panel);
-    }
-
-    private static void resetFrame(){
-        frame.getContentPane().remove(currentPanel);
-        currentPanel = null;
-
     }
 
     @SuppressWarnings("all")

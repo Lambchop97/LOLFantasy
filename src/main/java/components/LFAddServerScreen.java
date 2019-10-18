@@ -45,7 +45,7 @@ public class LFAddServerScreen extends LFScreen{
 
         iconCompsInner.setLayout(new BoxLayout(iconCompsInner, BoxLayout.LINE_AXIS));
 
-        JLabel icon = new JLabel(new ImageIcon(ServerCard.defaultIcon));
+        JLabel icon = new JLabel(new ImageIcon(LFServerCard.defaultIcon));
         JLabel iconInner = new JLabel("ICON:");
         JButton changeIcon = new JButton("CHANGE");
 
