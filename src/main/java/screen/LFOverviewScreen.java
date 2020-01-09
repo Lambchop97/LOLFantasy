@@ -1,4 +1,7 @@
-package components;
+package screen;
+
+import components.LFInnerOverview;
+import components.LFTabPanel;
 
 import javax.swing.*;
 import java.awt.*;

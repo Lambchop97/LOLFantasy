@@ -1,7 +1,7 @@
 package start;
 
-import components.LFAddServerScreen;
-import components.LFSelectServerScreen;
+import screen.LFAddServerScreen;
+import screen.LFSelectServerScreen;
 import gui.FrameManager;
 import gui.UIUtils;
 import web.LFWebRequest;

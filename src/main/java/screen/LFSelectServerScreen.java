@@ -1,5 +1,6 @@
-package components;
+package screen;
 
+import components.LFServerCard;
 import gui.UIUtils;
 import start.StartUp;
 
@@ -8,7 +9,7 @@ import javax.swing.plaf.metal.MetalScrollBarUI;
 import java.awt.*;
 import java.io.File;
 
-public class LFSelectServerScreen extends LFScreen{
+public class LFSelectServerScreen extends LFScreen {
 
 
 

@@ -1,5 +1,6 @@
-package components;
+package screen;
 
+import components.LFServerCard;
 import gui.FrameManager;
 import gui.UIUtils;
 import start.StartUp;
@@ -16,7 +17,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class LFAddServerScreen extends LFScreen{
+public class LFAddServerScreen extends LFScreen {
 
 
 
@@ -45,7 +46,7 @@ public class LFAddServerScreen extends LFScreen{
 
         iconCompsInner.setLayout(new BoxLayout(iconCompsInner, BoxLayout.LINE_AXIS));
 
-        JLabel icon = new JLabel(new ImageIcon(LFServerCard.defaultIcon));
+        JLabel icon = new JLabel(new ImageIcon(LFServerCard.getDefaultIcon()));
         JLabel iconInner = new JLabel("ICON:");
         JButton changeIcon = new JButton("CHANGE");
 

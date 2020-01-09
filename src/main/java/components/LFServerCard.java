@@ -2,6 +2,9 @@ package components;
 
 import gui.FrameManager;
 import gui.UIUtils;
+import screen.LFAddServerScreen;
+import screen.LFOverviewScreen;
+import screen.LFSelectServerScreen;
 import start.StartUp;
 
 import javax.imageio.ImageIO;
@@ -13,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 
-class LFServerCard extends JLayeredPane {
+public class LFServerCard extends JLayeredPane {
 
     private String name;
     private String description;
@@ -43,7 +46,7 @@ class LFServerCard extends JLayeredPane {
         }
     }
 
-    LFServerCard(){
+    public LFServerCard(){
         this.setPreferredSize(new Dimension(333, 64));
         content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
@@ -81,7 +84,7 @@ class LFServerCard extends JLayeredPane {
         }
     }
 
-    LFServerCard(String path){
+    public LFServerCard(String path){
         this.setPreferredSize(new Dimension(333, 64));
         name = path.split("\\\\")[path.split("\\\\").length - 1];
         description = "This is a default description";
@@ -287,6 +290,10 @@ class LFServerCard extends JLayeredPane {
             deleteFile(f);
         }
         file.delete();
+    }
+
+    public static BufferedImage getDefaultIcon(){
+        return defaultIcon;
     }
 
 }

@@ -1,4 +1,4 @@
-package components;
+package screen;
 
 import javax.swing.*;
 import java.awt.*;
