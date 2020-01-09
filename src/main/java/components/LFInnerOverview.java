@@ -14,7 +14,7 @@ public class LFInnerOverview {
 
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.setBackground(UIUtils.grey);
-        content.setMaximumSize(new Dimension(1280, 694));
+        content.setMaximumSize(new Dimension(1280, 664));
 
         content.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -32,7 +32,7 @@ public class LFInnerOverview {
         innerContent.add(matchesPanel.getContent());
         innerContent.add(standingsPanel.getContent());
 
-        LFTradePanel tradePanel = new LFTradePanel();
+        LFStatusChangePanel tradePanel = new LFStatusChangePanel();
 
         content.add(innerContent);
         content.add(tradePanel.getContent());

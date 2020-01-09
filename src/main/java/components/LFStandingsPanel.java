@@ -13,8 +13,9 @@ public class LFStandingsPanel {
 
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.setBackground(UIUtils.greyLight.brighter());
-        content.setBorder(BorderFactory.createMatteBorder(5,0,5,5,UIUtils.greyLight));
-        content.setMaximumSize(new Dimension(1255/3 + 1, 524));
+        content.setBorder(BorderFactory.createMatteBorder(0,0,0,0,UIUtils.greyLight));
+        content.setMaximumSize(new Dimension(435, 514));
+        content.setAlignmentY(Component.TOP_ALIGNMENT);
     }
 
     public JPanel getContent() {

@@ -4,6 +4,7 @@ import components.LFAddServerScreen;
 import components.LFSelectServerScreen;
 import gui.FrameManager;
 import gui.UIUtils;
+import web.LFWebRequest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,7 @@ public class StartUp {
 
 
         createDir();
+        new LFWebRequest("https://lol.gamepedia.com/LCS/2020_Season/Spring_Season");
     }
 
     @SuppressWarnings("all")
