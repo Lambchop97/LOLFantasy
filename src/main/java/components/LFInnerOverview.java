@@ -14,7 +14,7 @@ public class LFInnerOverview {
 
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.setBackground(UIUtils.grey);
-        content.setMaximumSize(new Dimension(1280, 664));
+        content.setMaximumSize(new Dimension(1280, 657));
 
         content.setAlignmentX(Component.CENTER_ALIGNMENT);
 

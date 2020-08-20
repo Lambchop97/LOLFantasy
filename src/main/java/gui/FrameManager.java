@@ -21,6 +21,8 @@ public class FrameManager {
         frame.add(content);
         frame.revalidate();
         frame.repaint();
+
+        currentContent.requestFocusInWindow();
     }
 
     private static void resetFrame(){
@@ -36,5 +38,9 @@ public class FrameManager {
         frame.setPreferredSize(new Dimension(width, height));
         frame.pack();
         frame.setLocationRelativeTo(null);
+    }
+
+    public static void focus(){
+        frame.requestFocus();
     }
 }

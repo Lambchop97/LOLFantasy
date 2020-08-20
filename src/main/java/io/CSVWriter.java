@@ -4,9 +4,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-class CSVWriter {
+public class CSVWriter {
 
-    static void writeCSVFile(CSVFile file){
+    public static void writeCSVFile(CSVFile file){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath()));
 

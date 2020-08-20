@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-class CSVReader {
+public  class CSVReader {
 
     static void readCSVFile(CSVFile file){
         try {

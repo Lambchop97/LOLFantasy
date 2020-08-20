@@ -14,12 +14,21 @@ public class LFTabPanel {
     private String currentTab;
     private JButton currentButton;
 
+    private static Color defaultColor = UIUtils.lighter(UIUtils.grey.brighter());
+    private static Color hoverColor = UIUtils.lighter(defaultColor);
+    private static Color clickedColor = UIUtils.darker(defaultColor);
+
+    private static Color borderColor = UIUtils.greyDark;
+
+    private static int buttonWidth = 1276/6;
+
     public LFTabPanel(String currentTab){
         content = new JPanel();
 
         content.setLayout(new BoxLayout(content, BoxLayout.LINE_AXIS));
         content.setMaximumSize(new Dimension(1280, 26));
         content.setBackground(UIUtils.grey);
+        content.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         this.currentTab = currentTab;
 
@@ -34,48 +43,48 @@ public class LFTabPanel {
         JButton matchUp = generateTabButton("MATCH UP", null);
         content.add(matchUp);
         JButton stats = generateTabButton("STATS", null);
-        stats.setBorder(BorderFactory.createMatteBorder(0,0,1,0,UIUtils.greyDark));
+        stats.setBorder(BorderFactory.createMatteBorder(0,0,1,0,borderColor));
         content.add(stats);
 
-        currentButton.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight)));
+        currentButton.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, clickedColor)));
     }
 
     private JButton generateTabButton(String text, ActionListener actionListener){
         JButton button = new JButton(text);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setBorder(BorderFactory.createMatteBorder(0,0,1,1,UIUtils.greyDark));
+        button.setBorder(BorderFactory.createMatteBorder(0,0,1,1,borderColor));
         if(currentTab.matches(text.toLowerCase())) currentButton = button;
         if(button.equals(currentButton)){
-            button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyDark)));
+            button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, clickedColor)));
         } else {
-            button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight.darker())));
+            button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, defaultColor)));
         }
         button.setForeground(Color.white);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.CENTER);
         if(actionListener != null) button.addActionListener(actionListener);
         button.addActionListener(e -> {
-            currentButton.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight.darker())));
-            button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight)));
+            currentButton.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, defaultColor)));
+            button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, clickedColor)));
             currentButton = button;
         });
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if(button.equals(currentButton)){
-                    button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight)));
+                    button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, clickedColor)));
                 } else {
-                    button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyDark)));
+                    button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, hoverColor)));
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 if(button.equals(currentButton)){
-                    button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight)));
+                    button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, clickedColor)));
                 } else {
-                    button.setIcon(new ImageIcon(UIUtils.createImage(1280/6, 25, UIUtils.greyLight.darker())));
+                    button.setIcon(new ImageIcon(UIUtils.createImage(buttonWidth, 25, defaultColor)));
                 }
             }
         });

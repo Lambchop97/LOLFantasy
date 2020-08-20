@@ -14,10 +14,10 @@ public class LFStatusChangePanel {
         JPanel content = new JPanel();
 
         contentScroll = new JScrollPane(content);
-        contentScroll.setMaximumSize(new Dimension(1315, 180));
+        contentScroll.setMaximumSize(new Dimension(1315, 185));
         contentScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         contentScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        contentScroll.setBorder(BorderFactory.createMatteBorder(5,5,5,5,UIUtils.grey));
+        contentScroll.setBorder(BorderFactory.createMatteBorder(0,5,5,5,UIUtils.grey));
         contentScroll.getHorizontalScrollBar().setUI(new MetalScrollBarUI(){
             JButton b = new JButton(){
                 @Override
@@ -55,9 +55,9 @@ public class LFStatusChangePanel {
         content.setBackground(UIUtils.grey);
         content.setBorder(BorderFactory.createMatteBorder(0,0,5,0,UIUtils.grey));
 
-        for(int i = 0; i < 15; i++){
+        for(int i = 0; i < 3; i++){
             content.add(new LFStatusChangeCard().getContent());
-            if(i < 14) content.add(Box.createRigidArea(new Dimension(5, 0)));
+            if(i < 2) content.add(Box.createRigidArea(new Dimension(5, 0)));
         }
     }
 

@@ -1,10 +1,9 @@
 package start;
 
-import screen.LFAddServerScreen;
-import screen.LFSelectServerScreen;
 import gui.FrameManager;
 import gui.UIUtils;
-import web.LFWebRequest;
+import screen.LFAddServerScreen;
+import screen.LFSelectServerScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
+import java.io.File;
 
 public class StartUp {
 
@@ -44,7 +43,8 @@ public class StartUp {
 
 
         createDir();
-        new LFWebRequest("https://lol.gamepedia.com/LCS/2020_Season/Spring_Season");
+        //new LFWebRequest("https://lol.gamepedia.com/LCS/2020_Season/Spring_Season");
+        //WebUtil.extractTeamsFromMainPage(new LFWebRequest("https://lol.gamepedia.com/LCS/2020_Season/Spring_Season"));
     }
 
     @SuppressWarnings("all")
@@ -119,7 +119,6 @@ public class StartUp {
         FrameManager.setCurrentContent(panel);
     }
 
-    @SuppressWarnings("all")
     public static void startAsClient(){
         FrameManager.setCurrentContent(new LFSelectServerScreen().getContent());
     }

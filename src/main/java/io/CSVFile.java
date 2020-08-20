@@ -7,10 +7,9 @@ public class CSVFile {
     String[][] data;
     private String path;
 
-    public CSVFile(String filename){
-        this.path = StartUp.HOME_PATH + filename;
-        CSVReader.readCSVFile(this);
-        CSVWriter.writeCSVFile(this);
+    public CSVFile(String filename, int width, int height){
+        this.path = StartUp.HOME_PATH + "/" + filename + ".csv";
+        data = new String[height][width];
     }
 
     String getPath(){
@@ -22,7 +21,7 @@ public class CSVFile {
         for(String[] sa: data){
             for(String s: sa){
                 if(s == null || s.matches("")){
-                    System.out.print("\'null\' ");
+                    System.out.print("'null' ");
                 } else {
                     System.out.print(s + " ");
                 }
@@ -63,7 +62,6 @@ public class CSVFile {
         return true;
     }
 
-    @SuppressWarnings("all")
     public void setRange(String[][] newData, int x, int y){
         if(data[0].length < x + newData[0].length || data.length < y + newData.length || 0 > x || 0 > y) return;
         for(int k = y; k < y + newData.length; k++){

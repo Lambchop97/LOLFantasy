@@ -41,5 +41,11 @@ public class LFWebRequest {
         }
     }
 
+    public Document getDocument(){
+        return document;
+    }
 
+    public String getURL(){
+        return URL;
+    }
 }

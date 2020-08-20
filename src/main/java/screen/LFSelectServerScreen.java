@@ -27,9 +27,9 @@ public class LFSelectServerScreen extends LFScreen {
         screenTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
         JScrollPane list = new JScrollPane(scrollingContent);
-        list.setMaximumSize(new Dimension(350, Integer.MAX_VALUE));
-        list.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        list.setMaximumSize(new Dimension(350, 500));
         list.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        list.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         list.getVerticalScrollBar().setUI(new MetalScrollBarUI(){
             JButton b = new JButton(){
                 @Override
@@ -71,17 +71,17 @@ public class LFSelectServerScreen extends LFScreen {
         File home = new File(StartUp.HOME_PATH);
 
         File[] files = home.listFiles();
+        int cards = 0;
 
-        if(files != null ) for(File f: files){
-            if(f.isDirectory()){
+        if(files != null ) for(File f: files) {
+            if (f.isDirectory()) {
                 LFServerCard card = new LFServerCard(f.getAbsolutePath());
                 scrollingContent.add(card);
+                scrollingContent.add(Box.createRigidArea(new Dimension(0,2)));
             }
         }
         scrollingContent.add(newCard);
-
-        scrollingContent.revalidate();
-        scrollingContent.repaint();
+        scrollingContent.setBackground(UIUtils.grey);
 
         content.add(screenTitle);
         content.add(Box.createRigidArea(new Dimension(0,10)));
